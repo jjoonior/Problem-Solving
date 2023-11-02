@@ -3,10 +3,10 @@ function solution(k, dungeons) {
 
     const path = [];
 
-    (function fn (m){
+    (function fn(m) {
         for (let i = 0; i < dungeons.length; i++) {
-            if (!path.includes(i)) {
-                if (m>= dungeons[i][0]) {
+            if (!path.includes(i) && m >= dungeons[i][0] && m >= dungeons[i][1]) {
+                if (m >= dungeons[i][0]) {
                     path.push(i);
                     m -= dungeons[i][1];
                     answer = Math.max(answer, path.length);
@@ -17,6 +17,6 @@ function solution(k, dungeons) {
             }
         }
     })(k);
-    
+
     return answer;
 }

@@ -7,6 +7,7 @@ public class Main {
   static int[] arr;
   static ArrayList<Integer> list;
   static boolean[] used;
+  static StringBuilder sb;
 
   public static void main(String args[]) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,6 +18,7 @@ public class Main {
     arr = new int[N];
     list = new ArrayList<>();
     used = new boolean[N];
+    sb = new StringBuilder();
 
     st = new StringTokenizer(br.readLine());
     for (int i = 0; i < N; i++) {
@@ -25,12 +27,15 @@ public class Main {
 
     Arrays.sort(arr);
     f(0);
-
+    System.out.println(sb);
   }
 
   static void f(int len) {
     if (len == M) {
-      System.out.println(list.toString().substring(1, list.toString().length() - 1).replace(",", ""));
+      for (int x : list) {
+        sb.append(x).append(" ");
+      }
+      sb.append("\n");
       return;
     }
 

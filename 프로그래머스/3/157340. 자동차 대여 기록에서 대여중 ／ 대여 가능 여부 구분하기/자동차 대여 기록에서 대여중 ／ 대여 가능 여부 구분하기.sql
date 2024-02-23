@@ -4,7 +4,7 @@ SELECT car_id,
         when car_id in (
             select car_id
             from CAR_RENTAL_COMPANY_RENTAL_HISTORY
-            where '2022-10-16' between start_date and end_date
+            where start_date <= date('2022-10-16') and end_date >= date('2022-10-16')
             )
         then '대여중'
         else '대여 가능'

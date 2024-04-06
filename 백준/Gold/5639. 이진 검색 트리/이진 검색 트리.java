@@ -14,31 +14,9 @@ public class Main {
       }
 
       int x = Integer.parseInt(input);
-      if (root.x > x) {
-        f(root, root.left, x);
-      } else {
-        f(root, root.right, x);
-      }
+      root.insert(x);
     }
     postOrder(root);
-  }
-
-  static void f(Node parent, Node node, int x){
-    if (node == null) {
-      node = new Node(x);
-      if (parent.x > x) {
-        parent.left = node;
-      } else {
-        parent.right = node;
-      }
-      return;
-    }
-
-    if (node.x > x) {
-      f(node, node.left, x);
-    } else {
-      f(node, node.right, x);
-    }
   }
 
   static void postOrder(Node node){
@@ -59,5 +37,21 @@ class Node {
 
   Node(int x) {
     this.x = x;
+  }
+
+  void insert(int x){
+    if (this.x > x) {
+      if (this.left == null) {
+        this.left = new Node(x);
+      } else {
+        this.left.insert(x);
+      }
+    } else {
+      if (this.right == null) {
+        this.right = new Node(x);
+      } else {
+        this.right.insert(x);
+      }
+    }
   }
 }

@@ -45,16 +45,14 @@ public class Main {
       return u;
     }
 
-    return find(parent[u]);
+    return parent[u] = find(parent[u]);
   }
 
   static void union(int u, int v) {
     int uRoot = find(u);
     int vRoot = find(v);
 
-    if (uRoot < vRoot) {
-      parent[vRoot] = uRoot;
-    } else {
+    if (uRoot != vRoot) {
       parent[uRoot] = vRoot;
     }
   }

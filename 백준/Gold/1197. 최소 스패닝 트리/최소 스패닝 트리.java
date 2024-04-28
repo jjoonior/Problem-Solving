@@ -3,8 +3,8 @@ import java.util.*;
 
 public class Main {
   static int V, E;
-  static List<Edge> edges = new ArrayList<>();
-  static int[] parent;
+  static boolean[] visited;
+  static List<Edge>[] graph;
 
 
   public static void main(String args[]) throws Exception {
@@ -13,58 +13,48 @@ public class Main {
 
     V = Integer.parseInt(st.nextToken());
     E = Integer.parseInt(st.nextToken());
-    parent = new int[V + 1];
-
+    visited = new boolean[V + 1];
+    graph = new List[V + 1];
+    for (int i = 1; i <= V; i++) {
+      graph[i] = new ArrayList<>();
+    }
 
     for (int i = 0; i < E; i++) {
       st = new StringTokenizer(br.readLine());
       int u = Integer.parseInt(st.nextToken());
       int v = Integer.parseInt(st.nextToken());
       int w = Integer.parseInt(st.nextToken());
-      edges.add(new Edge(u, v, w));
+      graph[u].add(new Edge(v, w));
+      graph[v].add(new Edge(u, w));
     }
 
-    Collections.sort(edges);
-    for (int i = 1; i <= V; i++) {
-      parent[i] = i;
-    }
+    PriorityQueue<Edge> pq = new PriorityQueue<>();
+    pq.offer(new Edge(1, 0));
 
     int cost = 0;
-    for (Edge e : edges) {
-      if (find(e.u) != find(e.v)) {
+    while (!pq.isEmpty()) {
+      Edge e = pq.poll();
+      if (!visited[e.v]) {
+        visited[e.v] = true;
         cost += e.w;
-        union(e.u, e.v);
+        for (Edge edge : graph[e.v]) {
+          if (!visited[edge.v]) {
+            pq.offer(edge);
+          }
+        }
       }
     }
 
     System.out.println(cost);
   }
 
-  static int find(int u) {
-    if (parent[u] == u) {
-      return u;
-    }
-
-    return parent[u] = find(parent[u]);
-  }
-
-  static void union(int u, int v) {
-    int uRoot = find(u);
-    int vRoot = find(v);
-
-    if (uRoot != vRoot) {
-      parent[uRoot] = vRoot;
-    }
-  }
 }
 
 class Edge implements Comparable<Edge> {
-  int u;
   int v;
   int w;
 
-  Edge(int u, int v, int w) {
-    this.u = u;
+  Edge(int v, int w) {
     this.v = v;
     this.w = w;
   }

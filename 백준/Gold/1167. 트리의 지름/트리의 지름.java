@@ -27,7 +27,6 @@ public class Main {
         }
         int w = Integer.parseInt(st.nextToken());
         graph[u].add(new Node(v, w));
-        graph[v].add(new Node(u, w));
       }
     }
 

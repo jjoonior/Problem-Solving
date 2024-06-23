@@ -1,52 +1,46 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
   public static void main(String args[]) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    int T = Integer.parseInt(br.readLine());
 
-    int N = Integer.parseInt(br.readLine());
-    long[] A = new long[N + 1];
+    int T = Integer.parseInt(br.readLine());
+    int n = Integer.parseInt(br.readLine());
+    long[] A = new long[n + 1];
     StringTokenizer st = new StringTokenizer(br.readLine());
-    for (int i = 1; i <= N; i++) {
-      A[i] += A[i - 1] + Integer.parseInt(st.nextToken());
+    for (int i = 1; i <= n; i++) {
+      A[i] = A[i - 1] + Integer.parseInt(st.nextToken());
     }
 
-    int M = Integer.parseInt(br.readLine());
-    long[] B = new long[M + 1];
+    int m = Integer.parseInt(br.readLine());
+    long[] B = new long[m + 1];
     st = new StringTokenizer(br.readLine());
-    for (int i = 1; i <= M; i++) {
-      B[i] += B[i - 1] + Integer.parseInt(st.nextToken());
+    for (int i = 1; i <= m; i++) {
+      B[i] = B[i - 1] + Integer.parseInt(st.nextToken());
     }
 
     Map<Long, Integer> mapA = new HashMap<>();
-    for (int i = 1; i <= N; i++) {
+    for (int i = 1; i <= n; i++) {
       for (int j = 0; j < i; j++) {
         mapA.put(A[i] - A[j], mapA.getOrDefault(A[i] - A[j], 0) + 1);
       }
     }
 
     Map<Long, Integer> mapB = new HashMap<>();
-    for (int i = 1; i <= M; i++) {
+    for (int i = 1; i <= m; i++) {
       for (int j = 0; j < i; j++) {
         mapB.put(B[i] - B[j], mapB.getOrDefault(B[i] - B[j], 0) + 1);
       }
     }
 
     long cnt = 0;
-    for (long key : mapA.keySet()) {
+    for (Long key : mapA.keySet()) {
       if (mapB.containsKey(T - key)) {
-        int a = mapA.get(key);
-        int b = mapB.get(T - key);
-        cnt += (long) a * b;
+        cnt += (long) mapA.get(key) * mapB.get(T - key);
       }
     }
 
     System.out.println(cnt);
   }
 }
-

@@ -24,16 +24,18 @@ public class Main {
 
 		rotate();
 
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
-				System.out.print(A[i][j] + " ");
+				sb.append(A[i][j] + " ");
 			}
-			System.out.println();
+			sb.append("\n");
 		}
+		System.out.println(sb);
 	}
 
 	static void rotate() {
-		int m = Math.min(N/2, M/2);
+		int m = Math.min(N / 2, M / 2);
 		List<Node>[] xy = new List[m];
 		List<Integer>[] v = new List[m];
 
@@ -60,25 +62,17 @@ public class Main {
 				xy[i].add(new Node(i + j, i));
 				v[i].add(A[i + j][i]);
 			}
-		}
 
-		for (int i = 0; i < m; i++) {
-			List<Integer> V = v[i];
-			for (int j = 0; j < R % V.size(); j++) {
-				V.add(V.remove(0));
+			for (int j = 0; j < R % v[i].size(); j++) {
+				v[i].add(v[i].remove(0));
 			}
-		}
 
-		for (int i = 0; i < m; i++) {
-			List<Node> xyList = xy[i];
-			List<Integer> vList = v[i];
-
-			for (int j = 0; j < xyList.size(); j++) {
-				Node node = xyList.get(j);
+			for (int j = 0; j < xy[i].size(); j++) {
+				Node node = xy[i].get(j);
 				int y = node.y;
 				int x = node.x;
 
-				A[y][x] = vList.get(j);
+				A[y][x] = v[i].get(j);
 			}
 		}
 	}

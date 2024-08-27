@@ -9,8 +9,6 @@ public class Main {
 		int C = Integer.parseInt(st.nextToken());
 
 		char[][] map = new char[R][C];
-		int[] M = new int[2];
-		int[] Z = new int[2];
 		int[] answerPoint = new int[2];
 		char answerBlock = '.';
 
@@ -18,14 +16,6 @@ public class Main {
 			String input = br.readLine();
 			for (int j = 0; j < C; j++) {
 				map[i][j] = input.charAt(j);
-				if (map[i][j] == 'M') {
-					M[0] = i;
-					M[1] = j;
-				}
-				if (map[i][j] == 'Z') {
-					Z[0] = i;
-					Z[1] = j;
-				}
 			}
 		}
 

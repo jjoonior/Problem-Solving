@@ -9,7 +9,7 @@ public class Main {
 
 		int N = Integer.parseInt(br.readLine());
 
-		Map<String, Integer> cnt = new HashMap<>();
+		Map<String, Integer> cnt = new TreeMap<>();
 		Map<String, Set<String>> childList = new TreeMap<>();
 		Map<String, Set<String>> cList = new TreeMap<>();
 		Queue<String> q = new LinkedList<>();

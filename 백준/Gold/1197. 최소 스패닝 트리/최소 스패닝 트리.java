@@ -26,12 +26,14 @@ public class Main {
 			pq.add(new Edge(a,b,c));
 		}
 
+		int cnt = V - 1;
 		int sum = 0;
-		while(!pq.isEmpty()) {
+		while (!pq.isEmpty() && cnt > 0) {
 			Edge edge = pq.poll();
-			
-			if(findSet(edge.u) != findSet(edge.v)) {
-				sum+= edge.w;
+
+			if (findSet(edge.u) != findSet(edge.v)) {
+				cnt--;
+				sum += edge.w;
 				union(edge.u, edge.v);
 			}
 		}

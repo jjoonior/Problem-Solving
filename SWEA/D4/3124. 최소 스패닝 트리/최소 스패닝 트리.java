@@ -13,54 +13,53 @@ public class Solution {
 
 			int V = Integer.parseInt(st.nextToken());
 			int E = Integer.parseInt(st.nextToken());
-			p = new int[V + 1];
 
+			boolean[] visited = new boolean[V + 1];
+			List<Edge>[] graph = new List[V + 1];
 			for (int i = 1; i <= V; i++) {
-				p[i] = i;
+				graph[i] = new ArrayList<>();
 			}
-
-			PriorityQueue<Edge> pq = new PriorityQueue<>();
 
 			for (int i = 0; i < E; i++) {
 				st = new StringTokenizer(br.readLine());
 				int a = Integer.parseInt(st.nextToken());
 				int b = Integer.parseInt(st.nextToken());
 				int c = Integer.parseInt(st.nextToken());
-				pq.add(new Edge(a, b, c));
+				graph[a].add(new Edge(b, c));
+				graph[b].add(new Edge(a, c));
 			}
 
 			long sum = 0;
-			int cnt = V - 1;
+			int cnt = V;
+
+			PriorityQueue<Edge> pq = new PriorityQueue<>();
+			pq.add(new Edge(1, 0));
+
 			while (!pq.isEmpty() && cnt > 0) {
 				Edge edge = pq.poll();
 
-				if (findSet(edge.u) != findSet(edge.v)) {
-					cnt--;
+				if (!visited[edge.v]) {
+					visited[edge.v] = true;
 					sum += edge.w;
-					union(edge.u, edge.v);
+					cnt--;
+
+					for (Edge e : graph[edge.v]) {
+						if (!visited[e.v])
+							pq.offer(e);
+					}
 				}
 			}
 
 			System.out.println("#" + t + " " + sum);
 		}
 	}
-
-	static int findSet(int a) {
-		return p[a] == a ? a : (p[a] = findSet(p[a]));
-	}
-
-	static void union(int a, int b) {
-		p[findSet(a)] = findSet(b);
-	}
 }
 
 class Edge implements Comparable<Edge> {
-	int u;
 	int v;
 	int w;
 
-	public Edge(int u, int v, int w) {
-		this.u = u;
+	public Edge(int v, int w) {
 		this.v = v;
 		this.w = w;
 	}

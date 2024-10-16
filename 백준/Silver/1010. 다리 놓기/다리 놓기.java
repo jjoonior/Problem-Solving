@@ -17,7 +17,7 @@ public class Main {
         dp[0][i] = i + 1;
       }
       for (int i = 1; i < N; i++) {
-        for (int j = i; j < M; j++) {
+        for (int j = i; j <= M - N + i; j++) {
           for (int k = 0; k < j; k++) {
             dp[i][j] += dp[i - 1][k];
           }
